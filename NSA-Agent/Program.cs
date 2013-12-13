@@ -18,6 +18,9 @@ namespace NSA_Agent
             tcpListener.Start();
             Console.WriteLine("Listening on port {0}", port);
 
+            String guid = (new Guid()).getGUID();
+            Console.WriteLine("GUID: {0}", guid);
+
             while (true)
             {
                 Socket socket = tcpListener.AcceptSocket();
