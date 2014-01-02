@@ -35,7 +35,7 @@ namespace NSA_Agent
             
             byte[] byteArray = memoryStream.ToArray();
 
-            lines.Add("HTTP 1.0 200 OK");
+            lines.Add("HTTP/1.1 200 OK");
             lines.Add("Date: " + DateTime.Now.ToLongDateString());
             lines.Add("Content-Type: image/png");
             lines.Add("Content-Length: " + byteArray.Length);
